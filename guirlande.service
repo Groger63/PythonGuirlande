@@ -1,0 +1,14 @@
+[Unit]
+Description=Une petite guirlande en python
+After=network.target 
+
+[Service]
+ExecStart=/usr/bin/python noel.py
+WorkingDirectory=/home/roger/PythonGuirlande
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=roger
+
+[Install]
+WantedBy=multi-user.target
