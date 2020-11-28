@@ -1,4 +1,4 @@
-
+import atexit
 from time import sleep
 import RPi.GPIO as GPIO
 import time
@@ -22,9 +22,14 @@ def switchLight(number) :
         GPIO.output(number, not  GPIO.input(number))
         return GPIO.input(number)
 
-try:
-    initSensors()
+def exit() :
+    print("Goodbye")
+    GPIO.cleanup()
 
+#try:
+def main() :
+    initSensors()
+    atexit.register(exit)
     while True:
         sleep(1)
         colorsOn = 0
@@ -34,9 +39,7 @@ try:
         if colorsOn == 0 :
             switchLight(colors[random.randint(1,len(colors)-1)])
 
-except KeyboardInterrupt:
-    print("Goodbye")
-    for color in colors :
-        GPIO.output(color, 0)
-    sleep(1)
-    GPIO.cleanup()
+try :
+    main()
+except :
+    print("Exception !")
